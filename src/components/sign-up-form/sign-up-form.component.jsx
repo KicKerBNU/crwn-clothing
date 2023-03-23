@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from "../../utils/firebase/firebase.utils";
 
-
+import FormInput from "../form-input/form-input.component";
+import "./sign-up-form.styles.scss";
+import Button from "../button/button.component";
 
 const defaultFormFields = {
     displayName: '',
@@ -14,6 +16,9 @@ const SignUpForm = () => {
     const [formFields, setFormFields] = useState(defaultFormFields);
     const {displayName, email, password, confirmPassword} = formFields;
 
+    const resetFormField = () => {
+        setFormFields(defaultFormFields);
+    }
 
     const handleChange = (event) => {
         const {name, value} = event.target;
@@ -24,33 +29,65 @@ const SignUpForm = () => {
     const handleSubmit = async(event) => {
         event.preventDefault();
         //confirm password match
+        if(password !== confirmPassword){
+            console.log("passwords do not match");
+            return;
+        }
         try {
-            let response = await createAuthUserWithEmailAndPassword(email, password);
-            console.log(response)
-            response.user.displayName = displayName;    
-            await createUserDocumentFromAuth(response.user);
-
+            const { user } = await createAuthUserWithEmailAndPassword(email, password);
+            await createUserDocumentFromAuth(user, {displayName});
+            resetFormField();
+            
         } catch (error) {
-            console.log("Error when authenticating ",error.message);
+            if(error.code === 'auth/email-already-in-use'){
+                console.log("Cannot create user, email already in use");
+            }else{
+                console.log("Error when authenticating ",error.message);
+            }
         }
         
     }
 
     return (
-        <div>
-            <h1>
+        <div className="sign-up-container">
+            <h2>Don't have an account?</h2>
+            <span>
                 Sign up with your email and password
-            </h1>
+            </span>
             <form onSubmit={handleSubmit}>
-                <label htmlFor="">Display Name</label>
-                <input type="text" required onChange={handleChange} name="displayName" value={displayName} />
-                <label htmlFor="">Email</label>
-                <input type="email" required onChange={handleChange} name="email" value={email}/>
-                <label htmlFor="">Password</label>
-                <input type="password" required onChange={handleChange} name="password" value={password}/>
-                <label htmlFor="">Confirm Password</label>
-                <input type="password" required onChange={handleChange} name="confirmPassword" value={confirmPassword}/>
-                <button type="submit">Sign Up</button>
+                <FormInput 
+                    label="Display Name"
+                    type="text" 
+                    required 
+                    onChange={handleChange} 
+                    name="displayName" 
+                    value={displayName} 
+                />
+                <FormInput 
+                    type="email" 
+                    required 
+                    onChange={handleChange} 
+                    name="email" 
+                    value={email}
+                    label="Email"
+                />
+                <FormInput 
+                    type="password" 
+                    required 
+                    onChange={handleChange} 
+                    name="password" 
+                    value={password}
+                    label="Password"
+                />
+                <FormInput
+                    type="password" 
+                    required 
+                    onChange={handleChange} 
+                    name="confirmPassword" 
+                    value={confirmPassword}
+                    label="Confirm Password"
+                />
+                <Button type="submit">Sign Up</Button>
             </form>
         </div>
     )
