@@ -1,29 +1,28 @@
-import './checkout-item.styles.scss';
+import {CheckoutItemContainer, ImageContainer, Name, Quantity, Price, Arrow, RemoveButton, Value} from './checkout-item.styles.jsx';
 const CheckoutItem = ( {cartItem, removeItem, removeItemToCart, addItemToCart}) => {
     const { name, imageUrl, price, quantity } = cartItem
     return (
-        <div className='checkout-item-container'>
-            <div className='image-container'>
+        <CheckoutItemContainer>
+            <ImageContainer>
                 <img src={imageUrl} alt={`${name}`} />
-            </div>
-            <span className='name'>{name}</span>
-            <span className='quantity'>
-                <div className='arrow' onClick={() => removeItemToCart(cartItem)}>
+            </ImageContainer>
+            <Name>{name}</Name>
+            <Quantity>
+                <Arrow onClick={() => removeItemToCart(cartItem)}>
                     &#10094;
-                </div>
-                <span className='value'>
+                </Arrow>
+                <Value>
                     {quantity}
-                </span>
-                <div className='arrow' onClick={() => addItemToCart(cartItem)}>
+                </Value>
+                <Arrow onClick={() => addItemToCart(cartItem)}>
                     &#10095;
-                </div>
-                
-            </span>
-            <span className='price'>{price}</span>
-            <div className='remove-button' onClick={() => removeItem(cartItem)}>
+                </Arrow>
+            </Quantity>
+            <Price>{price}</Price>
+            <RemoveButton onClick={() => removeItem(cartItem)}>
                 &#10005;
-            </div>
-        </div>
+            </RemoveButton>
+        </CheckoutItemContainer>
     )
 
 }

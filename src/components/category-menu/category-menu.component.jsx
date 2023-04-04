@@ -1,4 +1,4 @@
-import DirectoryItem from '../directory-item/directory-item.jsx';
+import DirectoryItem from '../directory-item/directory-item.component.jsx';
 import {CategoryMenuContainer} from "./category-menu.styles.jsx";
 
 
