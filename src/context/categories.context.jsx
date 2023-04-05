@@ -13,7 +13,6 @@ export const CategoriesProvider = ({children}) => {
         you need to create another function async to get async data*/
         const getCategoriesMap = async () => {
             const categoryMap = await getCategoriesAndDocuments();
-            console.log(categoryMap);
             setCategoriesMap(categoryMap);
         }
         getCategoriesMap();
