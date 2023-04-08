@@ -7,7 +7,7 @@ const Checkout = () => {
     const { cartItems, addItemToCart, removeItemToCart, removeItem, sumItems } = useContext(CartContext);
     return (
     <CheckoutContainer>
-        <HeaderBlock>
+        <CheckoutHeader>
             <HeaderBlock>
                 <span>Product</span>
             </HeaderBlock>
@@ -23,7 +23,7 @@ const Checkout = () => {
             <HeaderBlock>
                 <span>Remove</span>
             </HeaderBlock>
-        </HeaderBlock>
+        </CheckoutHeader>
             {
                 cartItems.map((cartItem) => (
                      <CheckoutItem 
