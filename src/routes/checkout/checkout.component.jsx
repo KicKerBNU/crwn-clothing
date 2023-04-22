@@ -34,7 +34,7 @@ const Checkout = () => {
                         removeItem={removeItem}
                         />
             ))}
-            <Total>Total: ${sumItems(cartItems).toLocaleString()}</Total>
+            <Total>Total: ${sumItems}</Total>
         </CheckoutContainer>
     );
 }
