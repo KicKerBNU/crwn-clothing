@@ -4,7 +4,7 @@ import CheckoutItem from '../../components/checkout-item/checkout-item.component
 import { CheckoutContainer, CheckoutHeader, HeaderBlock, Total} from './checkout.styles.jsx';
 
 const Checkout = () => {
-    const { cartItems, addItemToCart, removeItemToCart, removeItem, cartTotal } = useContext(CartContext);
+    const { cartItems, cartTotal } = useContext(CartContext);
     return (
     <CheckoutContainer>
         <CheckoutHeader>
@@ -29,9 +29,6 @@ const Checkout = () => {
                      <CheckoutItem 
                         key={cartItem.id} 
                         cartItem={cartItem}
-                        addItemToCart={addItemToCart}
-                        removeItemToCart={removeItemToCart}
-                        removeItem={removeItem}
                         />
             ))}
             <Total>Total: ${cartTotal}</Total>
