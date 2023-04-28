@@ -20,7 +20,7 @@ export const categoriesReducer = (state = CATEGORIES_INITIAL_STATE, action = {})
                 categories: payload,
                 isLoading: false,
             }
-        case CATEGORY_ACTION_TYPES.FETCH_CATEGORIES_FAILED:
+        case CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_FAILED:
             return {
                 ...state,
                 error: payload,

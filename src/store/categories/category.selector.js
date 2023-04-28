@@ -7,7 +7,11 @@ export const selectCategories = createSelector(
   categoriesSlice => categoriesSlice.categories
 );
 
-//This is just an abstraction of the state.user.currentUser to make it easier to use in other components
+export const selectCategoriesIsLoading = createSelector(
+  [selectCategoryReducer],
+  categoriesSlice => categoriesSlice.isLoading
+);
+
 //This is a memoized selector preventing the component from re-rendering if the state hasn't changed
 export const selectCategoriesMap = createSelector(
   [selectCategories],
@@ -17,3 +21,4 @@ export const selectCategoriesMap = createSelector(
       acc[title.toLowerCase()] = items;
       return acc;
     }, {}));
+
