@@ -50,7 +50,7 @@ const firebaseConfig = {
     
   }
 
-  export const createUserDocumentFromAuth = async(userAuth, additionalInformation) => {
+  export const createUserDocumentFromAuth = async(userAuth, additionalInformation = {}) => {
     if(!userAuth) return;
     const userDocRef = doc(db, 'users', userAuth.uid );
 
@@ -60,7 +60,7 @@ const firebaseConfig = {
       const createdAt = new Date();
 
       try {
-        await setDoc(userDocRef, { displayName, email, createdAt, ...additionalInformation = {}})
+        await setDoc(userDocRef, { displayName, email, createdAt, ...additionalInformation})
       } catch (error) {
         console.log("Error creating the user", error.message)
       }
@@ -70,7 +70,7 @@ const firebaseConfig = {
     //if user data does not exist, create / set the document with the data from userAuth in my collection
 
     //else return user docref
-    return userDocRef;
+    return userSnapshot;
   }
 
   export const createAuthUserWithEmailAndPassword = async(email, password) => {
@@ -86,3 +86,12 @@ const firebaseConfig = {
   export const signOutUser = async () => await signOut(auth);
 
   export const onAuthStateChangedListener = (callback) => onAuthStateChanged(auth, callback);
+
+  export const getCurrentUser = () => {
+    return new Promise((resolve,reject) => {
+      const unsubscribe = onAuthStateChanged(auth, (userAuth) => {
+        unsubscribe();
+        resolve(userAuth);
+      }, reject)
+    })
+  }
