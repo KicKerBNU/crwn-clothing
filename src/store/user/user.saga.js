@@ -9,7 +9,6 @@ import { createUserDocumentFromAuth, getCurrentUser } from '../../utils/firebase
 
 export function* getSnapshotFromUserAuth(userAuth, additionalDetails){
     try {
-        debugger;
         const userSnapShot = yield call(createUserDocumentFromAuth, userAuth, additionalDetails);
         yield put(signInSuccess({id: userSnapShot.id, ...userSnapShot.data()}));
     } catch (error) {
