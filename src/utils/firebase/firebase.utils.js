@@ -75,7 +75,8 @@ const firebaseConfig = {
 
   export const createAuthUserWithEmailAndPassword = async(email, password) => {
     if(!email || !password) return;
-    return await createUserWithEmailAndPassword(auth, email, password);
+    const user = await createUserWithEmailAndPassword(auth, email, password);
+    return user;
   }
 
   export const signInAuthWithEmailAndPassword = async(email, password) => {
