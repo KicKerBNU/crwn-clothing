@@ -1,17 +1,26 @@
-import { compose, createStore, applyMiddleware } from 'redux';
-import logger from 'redux-logger';
-import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+import { configureStore } from '@reduxjs/toolkit';
 import { rootReducer } from './root-reducer';
+import logger from 'redux-logger';
 
-const persistConfig = {
-    key: 'root',
-    storage,
-    blacklist: ['user']
-};
+//When you add middleware you dont use default toolkits middleware
+const middlewares = [process.env.NODE_ENV === 'development' && logger].filter(Boolean);
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+//import { compose, createStore, applyMiddleware } from 'redux';
+// import { persistStore, persistReducer } from 'redux-persist';
+// import storage from 'redux-persist/lib/storage';
 
-export const store = createStore(persistedReducer, compose(applyMiddleware(logger)));
+export const store = configureStore({
+    reducer: rootReducer,
+    //middleware: middlewares,
+});
+// const persistConfig = {
+//     key: 'root',
+//     storage,
+//     blacklist: ['user']
+// };
 
-export const persistor = persistStore(store);
+// const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+// export const store = createStore(persistedReducer, compose(applyMiddleware(logger)));
+
+// export const persistor = persistStore(store);
