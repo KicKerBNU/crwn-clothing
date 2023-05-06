@@ -11,7 +11,9 @@ const middlewares = [process.env.NODE_ENV === 'development' && logger].filter(Bo
 
 export const store = configureStore({
     reducer: rootReducer,
-    //middleware: middlewares,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+        serializableCheck: false,
+    }).concat(middlewares),
 });
 // const persistConfig = {
 //     key: 'root',
