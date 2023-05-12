@@ -2,13 +2,21 @@ import { Routes, Route} from 'react-router-dom';
 import CategoriesPreview from '../categories-preview/categories-preview.component';
 import Category from '../category/category.component';
 import { useEffect } from 'react';
+import { getCategoriesAndDocuments } from '../../utils/firebase/firebase.utils.js';
+import { setCategories } from '../../store/categories/category.reducer.js';
 import { useDispatch } from 'react-redux';
-import { fetchCategoriesStart } from '../../store/categories/category.action';
 
 const Shop = () => {
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(fetchCategoriesStart());
+        /* TIP -> You cant use async inside useEffect, 
+        you need to create another function async to get async data*/
+        const getCategoriesMap = async () => {
+            const categoriesArray = await getCategoriesAndDocuments('categories');
+            console.log(categoriesArray);
+            dispatch(setCategories(categoriesArray));
+        }
+        getCategoriesMap();
     }, [dispatch]);
     return (
         <Routes>
